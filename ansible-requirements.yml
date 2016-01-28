@@ -1,0 +1,5 @@
+- src: tersmitten.pip
+  version: "v1.2.0"
+- src: telusdigital.upstart
+- src: tersmitten.logrotated
+  version: "v1.0.2"
