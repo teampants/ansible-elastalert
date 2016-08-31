@@ -13,6 +13,16 @@
   pip:
     name: virtualenv
 
+- name: Avoid errors that result from InsecurePlatformWarning
+  apt:
+    name: "{{ item }}"
+  with_items:
+    - python-dev
+    - libffi-dev
+    - libssl-dev
+  tags:
+    - apt
+
 - name: Install elastalert dependencies
   pip:
     requirements: /opt/elastalert/requirements.txt
