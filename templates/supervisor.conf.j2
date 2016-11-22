@@ -1,0 +1,10 @@
+[program:elastalert]
+command = /opt/elastalert/venv/bin/python -- -m elastalert.elastalert --verbose --config /etc/elastalert/config.yaml
+user = elastalert
+redirect_stderr = true
+stdout_logfile=/var/log/elastalert_stdout.log
+stderr_logfile=/var/log/elastalert_stderr.log
+autostart=true
+autorestart=true
+startsecs=10
+stopwaitsecs=120

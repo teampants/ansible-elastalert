@@ -13,6 +13,11 @@
   pip:
     name: virtualenv
 
+- name: Install supervisor
+  apt: name={{ item }} state=present update_cache=yes
+  with_items:
+    - supervisor
+
 - name: Avoid errors that result from InsecurePlatformWarning
   apt:
     name: "{{ item }}"
@@ -84,9 +89,6 @@
     src: config.yaml
     dest: /etc/elastalert/config.yaml
 
-- name: Enable elastalert at boot
-  service:
-    name: elastalert
-    enabled: yes
-  notify:
-    - restart elastalert
+- name: Supervisor config to run elastalert
+  template: src=supervisor.conf.j2 dest=/etc/supervisor/conf.d/elastalert.conf
+  notify: restart supervisor
