@@ -1,5 +1,5 @@
 [program:elastalert]
-command = /opt/elastalert/venv/bin/python -- -m elastalert.elastalert --verbose --config /etc/elastalert/config.yaml
+command = /opt/elastalert/venv/bin/python -m elastalert.elastalert --config /etc/elastalert/config.yaml
 user = elastalert
 redirect_stderr = true
 stdout_logfile=/var/log/elastalert_stdout.log
