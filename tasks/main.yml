@@ -4,7 +4,7 @@
 
 - name: Clone elastalert repository
   git:
-    repo: https://github.com/Yelp/elastalert.git
+    repo: "{{ elastalert_git_repo }}"
     accept_hostkey: yes
     dest: /opt/elastalert
     version: "{{ elastalert_version }}"
