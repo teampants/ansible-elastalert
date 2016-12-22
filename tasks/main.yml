@@ -14,9 +14,12 @@
     name: virtualenv
 
 - name: Install supervisor
-  apt: name={{ item }} state=present update_cache=yes
+  apt: name={{ item }} state=present update_cache=yes cache_valid_time=86400
   with_items:
     - supervisor
+
+- name: add supervisor to boot
+  service: name=supervisor enabled=yes
 
 - name: Avoid errors that result from InsecurePlatformWarning
   apt:
