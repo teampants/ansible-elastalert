@@ -4,7 +4,7 @@
 
 - name: Clone elastalert repository
   git:
-    repo: https://github.com/Yelp/elastalert.git
+    repo: "{{ elastalert_git_repo }}"
     accept_hostkey: yes
     dest: /opt/elastalert
     version: "{{ elastalert_version }}"
@@ -12,6 +12,14 @@
 - name: Install virtualenv
   pip:
     name: virtualenv
+
+- name: Install supervisor
+  apt: name={{ item }} state=present update_cache=yes cache_valid_time=86400
+  with_items:
+    - supervisor
+
+- name: add supervisor to boot
+  service: name=supervisor enabled=yes
 
 - name: Avoid errors that result from InsecurePlatformWarning
   apt:
@@ -84,9 +92,6 @@
     src: config.yaml
     dest: /etc/elastalert/config.yaml
 
-- name: Enable elastalert at boot
-  service:
-    name: elastalert
-    enabled: yes
-  notify:
-    - restart elastalert
+- name: Supervisor config to run elastalert
+  template: src=supervisor.conf.j2 dest=/etc/supervisor/conf.d/elastalert.conf
+  notify: restart supervisor
